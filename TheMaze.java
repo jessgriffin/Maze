@@ -17,8 +17,8 @@ public class TheMaze {
 	    
 		
 		//if your maze has dimensions different than 10x5, change these x and y values accordingly
-		int x = 10;
-		int y = 5;
+		int x = 5;
+		int y = 10;
 		char [][] maze = new char [x][y];
 		int xPosition = 0;
 		int yPosition = 0;
@@ -47,6 +47,103 @@ public class TheMaze {
 					
 					xPosition = i;
 					yPosition = j;
+					
+				}
+				
+			}
+		}
+		
+		
+		// i dont think this actually does anything because we end up printing the solved maze withib the function. cant make
+		//it a void because that would mess up the recursion stuff going on
+		char randomArray [][] = FindPath(maze , xPosition, yPosition);
+		
+		
+
+
+	}
+
+	
+	public static char [][] FindPath( char [][]maze, int xPosition, int yPosition) {
+		
+		//first if to see if inbounds
+		if (0 <= xPosition && maze.length > xPosition && 0 <= yPosition && maze[0].length > yPosition) {
+		
+			if (maze[xPosition][yPosition] == 'G') {
+				//solution found ,
+				
+				// FIGURE OUT HOW TO print solved maze
+				
+				//using for loops you kind of reverse engineer what you did putting it from a string to 2d char array
+				for (int one = 0; one < maze.length; one++) {
+					//resets the line after it's printed, first time around this does nothing
+					String lineOfMaze = "";
+					
+					for (int two = 0; two < maze[0].length; two++) {
+						
+						lineOfMaze = lineOfMaze + maze[one][two];
+					}
+					
+					System.out.println(lineOfMaze);
+					
+				}
+				
+				return maze;
+				
+			} else if (maze[xPosition][yPosition] == '#') {
+				
+				// wall
+				return maze; 
+				
+			} else if (maze[xPosition][yPosition] == '+') {
+				//already been here
+				
+				return maze;
+			} else if (maze[xPosition][yPosition] == 'S' || maze[xPosition][yPosition] == '.'){
+				//when youre at the start, or on an open path
+				
+				if (maze[xPosition][yPosition] == '.') {
+					
+					//marks the spot as part of the path
+					maze[xPosition][yPosition] = '+';
+					
+				}
+				if (FindPath(maze, xPosition, yPosition+1) != maze) {
+					//checks to the north
+					
+					return maze;
+				} else if (FindPath(maze, xPosition+1, yPosition) != maze) {
+					//checks east
+					
+					return maze;
+				} else if (FindPath(maze, xPosition, yPosition-1) != maze) {
+					//check south
+					
+					return maze;
+				} else if (FindPath(maze, xPosition-1, yPosition) != maze) {
+					//checks west
+					
+					return maze;
+				} else {
+					// no path found, start backtracking and remove this spot as being a place on the path, unless youre still at the start
+					//in which case it just doesn't do anything
+					if (maze[xPosition][yPosition] == '+') {
+							
+							maze[xPosition][yPosition] = '.';
+							
+					}
+					
+					return maze;
+				}
+				
+				
+			}
+		
+			
+		}
+		return maze; 
+	}
+}
 					
 				}
 				
@@ -142,4 +239,5 @@ public class TheMaze {
 		}
 		return maze; 
 	}
+
 }
