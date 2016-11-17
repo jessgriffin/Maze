@@ -1,3 +1,12 @@
+/****************************************************************************
+ *
+ * Created by: Jess 
+ * Created on: Nov 2016
+ * Assignment 5b
+ * This program solves a maze and shows you the path through it.
+ * you need to change some text and numbers around to be able to put in a different maze
+ ****************************************************************************/
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
